@@ -1,0 +1,22 @@
+version: "2"
+services:
+  standaloneservice:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - '.:/eventuate-todo-list'
+    depends_on:
+      - mysql
+    environment:
+      - TODO_LIST_HOST_IP
+      - EVENTUATE_API_KEY_ID
+      - EVENTUATE_API_KEY_SECRET
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: es-test
+    ports:
+      - "3306:3306"
